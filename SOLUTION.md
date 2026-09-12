@@ -15,9 +15,9 @@
 
 ### Why step 3 still matters despite no numeric change
 
-In this dataset, once a customer is delivered within a retry chain, they're never retried again — so each customer only ever has *one* delivered row per chain, and a plain row-count already happens to equal the deduped count.
+In this dataset a customer is never put back into a retry chain once they have been delivered. This means each customer has one delivered row per chain. Therefore a simple count of the rows equals the number after deduping.
 
-However, this isn't safe to assume blindly. A naive `COUNT(DISTINCT customer_id)` taken **globally** (ignoring chain boundaries) gives **21**, not 22 — because it wrongly collapses standalone campaign 9101's legitimately re-targeted customer (`C20`, sent twice on purpose) into the same dedup pool as everything else. The fix: scope dedup **per retry chain** (via a recursive walk up `parent_id`), and explicitly exempt true standalone campaigns (no parent, no children) from dedup entirely.
+It would not be safe however to assume this without thinking. If you simply carry out a COUNT(DISTINCT customer_id) globally without taking the chain boundaries into account you get 21 than 22. That happens because the count incorrectly places the customer who was legitimately re‑targeted in standalone campaign 9101 (customer C20, who was sent to twice on purpose) into the deduplication pool as all the other customers. The solution is to apply deduplication on a per‑retry‑chain basis by means of a walk up the parent_id. Also explicitly exclude standalone campaigns (those with no parent and no children), from deduplication altogether.
 
 ## 2. Final SQL Query
 
