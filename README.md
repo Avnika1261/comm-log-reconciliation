@@ -1,6 +1,6 @@
 # Comm-Log Send Reconciliation — Solution
 
-**Merchant:** 501  **Period:** October 2026  **Final target_base:** 22
+**Merchant:** 501 | **Period:** October 2026 | **Final target_base:** 22
 
 ## 1. Reconciliation Bridge
 
