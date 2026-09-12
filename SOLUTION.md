@@ -11,7 +11,7 @@
 | 2 | Exclude sends belonging to campaigns still `approval_awaiting` (campaign 9004) | **22** | A campaign isn't in official reporting until its creation/approval workflow clears — the send pipeline ran ahead of approval, but those 4 delivered rows don't count |
 | 3 | Checked: collapse retries via `parent_id` and dedupe by customer **per chain** (not globally) | **22** (unchanged) | Doesn't move the number here, but is necessary for correctness — see note below |
 
-**Final = 22** ✓ matches Finance's number.
+**Final = 22** matches Finance's number.
 
 ### Why step 3 still matters despite no numeric change
 
